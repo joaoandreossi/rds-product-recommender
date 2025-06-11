@@ -7,7 +7,7 @@ import useProducts from '../../hooks/useProducts';
 import useForm from '../../hooks/useForm';
 import useRecommendations from '../../hooks/useRecommendations';
 
-function Form() {
+function Form({ onSubmit }) {
   const { preferences, features, products } = useProducts();
   const { formData, handleChange } = useForm({
     selectedPreferences: [],
@@ -15,7 +15,11 @@ function Form() {
     selectedRecommendationType: '',
   });
 
-  const { getRecommendations, recommendations } = useRecommendations(products);
+  const { getRecommendations, setRecommendations, recommendations } = useRecommendations(products);
+
+  useEffect(() => {
+    onSubmit(recommendations)
+  }, [recommendations])
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -24,7 +28,7 @@ function Form() {
     /**
      * Defina aqui a lógica para atualizar as recomendações e passar para a lista de recomendações
      */
-    console.log('aa')
+    setRecommendations(dataRecommendations);
   };
 
   return (
