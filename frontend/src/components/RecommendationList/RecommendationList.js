@@ -2,7 +2,7 @@ import React from 'react';
 
 function RecommendationList({ recommendations }) {
   return (
-    <div>
+    <section>
       <h2 className="text-lg font-bold mb-4">Lista de Recomendações:</h2>
 
       {recommendations.length === 0 && <p>Nenhuma recomendação encontrada.</p>}
@@ -14,7 +14,7 @@ function RecommendationList({ recommendations }) {
           </li>
         ))}
       </ul>
-    </div>
+    </section>
   );
 }
 

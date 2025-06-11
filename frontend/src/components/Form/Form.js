@@ -32,29 +32,31 @@ function Form({ onSubmit }) {
   };
 
   return (
-    <form
-      className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md"
-      onSubmit={handleSubmit}
-    >
-      <Preferences
-        preferences={preferences}
-        onPreferenceChange={(selected) =>
-          handleChange('selectedPreferences', selected)
-        }
-      />
-      <Features
-        features={features}
-        onFeatureChange={(selected) =>
-          handleChange('selectedFeatures', selected)
-        }
-      />
-      <RecommendationType
-        onRecommendationTypeChange={(selected) =>
-          handleChange('selectedRecommendationType', selected)
-        }
-      />
-      <SubmitButton text="Obter recomendação" />
-    </form>
+    <section>
+      <form
+        className="max-w-md mx-auto p-4 bg-white rounded-lg shadow-md"
+        onSubmit={handleSubmit}
+      >
+        <Preferences
+          preferences={preferences}
+          onPreferenceChange={(selected) =>
+            handleChange('selectedPreferences', selected)
+          }
+        />
+        <Features
+          features={features}
+          onFeatureChange={(selected) =>
+            handleChange('selectedFeatures', selected)
+          }
+        />
+        <RecommendationType
+          onRecommendationTypeChange={(selected) =>
+            handleChange('selectedRecommendationType', selected)
+          }
+        />
+        <SubmitButton text="Obter recomendação" />
+      </form>
+    </section>
   );
 }
 
