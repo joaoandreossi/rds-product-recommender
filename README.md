@@ -127,29 +127,29 @@ Para cumprir os requisitos descritos, devemos desenvolver um algoritmo que retor
     PROCEDURE:
 	    SET recommendations = []
 	    
-	    FOR product OF products                                                O(n)
-	        FOR preference OF product.preferences                                O(p)
-	            FOR user_preference OF user_preferences                            O(up)
+	    FOR product OF products                                                    O(n)
+	        FOR preference OF product.preferences                                    O(p)
+	            FOR user_preference OF user_preferences                                O(up)
 	                IF preference == user_preference
 	                    SET already_recommended = FALSE
-	                    FOR recommendation OF recommendations                        O(r)
+	                    FOR recommendation OF recommendations                            O(r)
 	                        IF recommendation == product
 	                            already_recommended = TRUE
 	                    IF already_recommended == FALSE
-	                        INSERT product INTO recommendations                      O(1)
+	                        INSERT product INTO recommendations                          O(1)
 	                        
-	        FOR feature OF product.features                                      O(f)
-	            FOR user_feature OF user_features                                  O(uf)
+	        FOR feature OF product.features                                          O(f)
+	            FOR user_feature OF user_features                                      O(uf)
 	                IF feature == user_feature
 	                    SET already_recommended = FALSE
-	                    FOR recommendation OF recommendations                        O(r)
+	                    FOR recommendation OF recommendations                            O(r)
 	                        IF recommendation == product
 	                            already_recommended = TRUE
 	                    IF already_recommended == FALSE
-	                        INSERT product INTO recommendations                      O(1)
+	                        INSERT product INTO recommendations                          O(1)
 	    
-	    IF recommendations.length > 0 AND recommendation_type == 'SingleProduct'
-	        recommendations = [recommendations[recommendations.length - 1]]    O(1)
+	    IF recommendations.length > 0 AND recommendation_type == 'SingleProduct'   
+	        recommendations = [recommendations[recommendations.length - 1]]        O(1)
 	    
 	    RETURN recommendations
 
@@ -170,23 +170,23 @@ Ainda precisamos converter de volta para array antes de retornar, que é uma ope
     PROCEDURE:
 	    SET recommendation_set = new Set()
 	    
-	    FOR product OF products                                                O(n)
-	        FOR preference OF product.preferences                                O(p)
-	            FOR user_preference OF user_preferences                            O(up)
+	    FOR product OF products                                                    O(n)
+	        FOR preference OF product.preferences                                    O(p)
+	            FOR user_preference OF user_preferences                                O(up)
 	                IF preference == user_preference
-	                    IF recommendation_set DOES NOT CONTAIN product               O(1)
-	                        INSERT product INTO recommendation_set                   O(1)
+	                    IF recommendation_set DOES NOT CONTAIN product                   O(1)
+	                        INSERT product INTO recommendation_set                       O(1)
 	                        
-	        FOR feature OF product.features                                      O(f)
-	            FOR user_feature OF user_features                                  O(uf)
+	        FOR feature OF product.features                                          O(f)
+	            FOR user_feature OF user_features                                      O(uf)
 	                IF feature == user_feature
-	                    IF recommendation_set DOES NOT CONTAIN product               O(1)
-	                        INSERT product INTO recommendation_set                   O(1)
+	                    IF recommendation_set DOES NOT CONTAIN product                   O(1)
+	                        INSERT product INTO recommendation_set                       O(1)
 	    
-	    SET recommendations = CONVERT recommendation_set INTO ARRAY            O(r)
+	    SET recommendations = CONVERT recommendation_set INTO ARRAY                O(r)
 	    
 	    IF recommendations.length > 0 AND recommendation_type == 'SingleProduct'
-	        recommendations = [recommendations[recommendations.length - 1]]    O(1)
+	        recommendations = [recommendations[recommendations.length - 1]]        O(1)
 	    
 	    RETURN recommendations
 
@@ -202,25 +202,25 @@ Podemos aplicar a mesma técnica para reduzir a complexidade da busca entre os o
         
     PROCEDURE:
 	    SET recommendation_set = new Set()
-	    SET user_preference_set = new Set(user_preferences)                  O(up)
-	    SET user_feature_set = new Set(user_features)                        O(uf)
+	    SET user_preference_set = new Set(user_preferences)                        O(up)
+	    SET user_feature_set = new Set(user_features)                              O(uf)
 	    
-	    FOR product OF products                                              O(n)
-	        SET preference_set = new Set(product.preferences)                  O(p)
-	        SET feature_set = new Set(product.features)                        O(f)
+	    FOR product OF products                                                    O(n)
+	        SET preference_set = new Set(product.preferences)                        O(p)
+	        SET feature_set = new Set(product.features)                              O(f)
 	        
-	        IF preference_set INTERSECTS WITH user_preference_set              O(min(p, up))
-	            IF recommendation_set DOES NOT CONTAIN product                 O(1)
-	                INSERT product INTO recommendation_set                     O(1)
+	        IF preference_set INTERSECTS WITH user_preference_set                    O(min(p, up))
+	            IF recommendation_set DOES NOT CONTAIN product                       O(1)
+	                INSERT product INTO recommendation_set                           O(1)
 	        
-	        IF feature_set INTERSECTS WITH user_feature_set                    O(min(f, uf))
-	            IF recommendation_set DOES NOT CONTAIN product                 O(1)
-	                INSERT product INTO recommendation_set                     O(1)
+	        IF feature_set INTERSECTS WITH user_feature_set                          O(min(f, uf))
+	            IF recommendation_set DOES NOT CONTAIN product                         O(1)
+	                INSERT product INTO recommendation_set                             O(1)
 
-	    SET recommendations = CONVERT recommendation_set INTO ARRAY          O(r)
+	    SET recommendations = CONVERT recommendation_set INTO ARRAY                O(r)
 	    
 	    IF recommendations.length > 0 AND recommendation_type == 'SingleProduct'
-	        recommendations = [recommendations[recommendations.length - 1]]  O(1)
+	        recommendations = [recommendations[recommendations.length - 1]]        O(1)
 	    
 	    RETURN recommendations
 
@@ -411,5 +411,7 @@ Espero que esse projeto e essa documentação traga um algum insight sobre minha
 # Informações de contato
 
 [LinkedIn](https://www.linkedin.com/in/joaoandreossi/)
+
 [E-mail](mailto:joao.andreossi@gmail.com)
+
 [WhatsApp](https://wa.me/5516981666814)
