@@ -80,4 +80,43 @@ describe('recommendationService', () => {
     expect(recommendations).toHaveLength(1);
     expect(recommendations[0].name).toBe('RD Conversas');
   });
+
+  test('Retorna um array vazio caso não tenha match', () => {
+    const formData = {
+      selectedRecommendationType: 'SingleProduct'
+    }
+
+    const recommendations = recommendationService.getRecommendations(
+      formData,
+      mockProducts
+    );
+
+    expect(recommendations).toHaveLength(0);
+  })
+
+  test('Retorna um array vazio caso formData seja indefinido', () => {
+    const formData = undefined
+
+    const recommendations = recommendationService.getRecommendations(
+      formData,
+      mockProducts
+    );
+
+    expect(recommendations).toHaveLength(0);
+  })
+
+  test('Retorna um array sem elementos repetidos', () => {
+    let formData = {
+      selectedFeatures: ['Criação e gestão de campanhas de e-mail', 'Rastreamento de comportamento do usuário'],
+      selectedRecommendationType: 'MultipleProducts'
+    }
+
+    let recommendations = recommendationService.getRecommendations(
+      formData,
+      mockProducts
+    );
+
+    expect(recommendations).toHaveLength(1);
+    expect(recommendations[0].name).toBe('RD Station Marketing');
+  })
 });
