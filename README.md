@@ -1,8 +1,19 @@
 # Recomendador de produtos da RD Station
 
-Esse projeto faz parte do processo seletivo da RD Station. O sistema consiste de uma aplicação web simples escrita com React e Tailwind, também acompanha um back-end REST simulado pela biblioteca *json-server* que oferece endpoints para requisição de uma lista de produtos da RD Station que são utilizados como base da lógica de recomendação de produtos. As instruções originais do problema podem ser encontradas na seção seguinte.
+Esse projeto faz parte do processo seletivo da RD Station. 
 
-# Instruções
+O sistema consiste de uma aplicação web simples escrita com React e Tailwind, também acompanha um back-end REST simulado pela biblioteca *json-server* que oferece endpoints para requisição de uma lista de produtos da RD Station que são utilizados como base da lógica de recomendação de produtos.
+
+Esse documento irá descrever em detalhes todo o processo realizado para chegar na solução proposta.
+
+# Como rodar o projeto
+
+1. Clone este repositório
+2. Instale as dependências do projeto principal com `npm install`
+3. Instale as dependências dos subprojetos `backend` e `frontend` executando `npm install` nos diretórios ou rodando o script `install.sh`
+4. Inicie a aplicação com `npm run start`
+
+# Instruções originais
 
 A tarefa deve ser desenvolvida de acordo com as instruções abaixo, que foram originalmente enviadas por e-mail durante o processo seletivo:
 
@@ -315,11 +326,11 @@ Nessa tarefa implementamos apenas o método `getRecommendations`, mas é bem sim
 
 Com isso acredito que cumprimos todos os critérios de aceite da tarefa!
 
-Seguindo o *GitFlow*, as alterações foram feitas na branch `feature/recommendation_algorithm`, seguido de um PR com a branch `main` como destino.
+Aqui marca o final do desenvolvimento originalmente delimitado no escopo das instruções, que era desenvolver o *core* do sistema de recomendação. A partir de agora iremos implementar diversas melhorias no projeto, mas que não fazem parte do escopo original.
 
-# Melhorias na interface
+# Melhorias de UX
 
-Agora que a funcionalidade central do sistema foi desenvolvida, podemos focar em outras melhorias que podem enriquecer a experiência do usuário em nossa aplicação. Seguindo a mesma estratégia que utilizamos na otimização de algoritmo, iremos procurar pequenas alterações que podemos implementar sem ter tanto trabalho ao invés de reescrever todo o código. 
+Agora que a funcionalidade central do sistema foi desenvolvida, podemos focar em outras melhorias que podem enriquecer a experiência do usuário em nossa aplicação. Seguindo a mesma estratégia que utilizamos na otimização de algoritmo, iremos procurar pequenas alterações que podemos implementar sem muito esforço, ao invés de reescrever todo o código. 
 
 #### Checkbox.js
 Uma das primeiras coisas que eu identifiquei foi que não existe nenhum feedback quando o usuário passa o mouse por elementos interativos. Uma melhoria simples é alterar o cursor para o tipo *pointer* quando o mouse passar por cima de um desses elementos, isso comunica ao usuário que o elemento é interativo e pode ser clicado. Também podemos alterar a cor do texto ligeiramente para dar ainda mais destaque.
@@ -370,3 +381,35 @@ Dentro da `<main>`, o conteúdo é claramente dividido em três partes: o parág
 ![HTML final após edições](https://i.imgur.com/nak01vp.png)
 
 Após essas alterações, podemos verificar que o HTML semântico é bem mais fácil de compreender e é possível captar a essência do documento sem nem precisar rodar a aplicação.
+
+# Aumentando a cobertura de testes
+
+No projeto original só existiam testes para o serviço de recomendação, o que é um número baixo em relação a quantidade de componentes do sistema. Eu já havia adicionado alguns testes para cobrir certos casos de uso do `RecommendationService`, mas podemos aumentar ainda mais a cobertura. 
+
+Utilizando a estratégia *bottom-up*, começamos escrevendo testes para os componentes folha `Checkbox`, `SubmitButton` e `RecommendationList`, e ao finalizar seguimos para os componentes compostos.
+
+Os componentes folha são simples, nenhum deles possui lógica interna e se preocupam apenas em renderizar HTML de acordo com os valores dos props, então os testes também são simples apenas verificam se os elementos são renderizados e se os callbacks funcionam corretamente.
+
+![exemplo de testes unitários de componentes folha](https://i.imgur.com/9HCbz67.png)
+
+Também adicionamos testes para as seções individuais dos formulários `Features`, `Preferences` e `RecommendationType`, incluindo a nova regra de que um dos *radio buttons* é selecionado por padrão.
+
+Por fim, fazemos um teste de integração com o componente `Form` para checar se o formulário é realmente enviado quando o componente `SubmitButton` é clicado, e um teste no serviço `ProductService` para garantir que o método `getProducts` funciona corretamente por meio de um mock das requisições do *axios* para testar como o método se comporta.
+
+![teste simples de integração e de serviço](https://i.imgur.com/tQYyGKg.png)
+
+Ao final de tudo, conseguimos aumentar a cobertura e agora temos a segurança de saber que mais de 90% do code base está coberta pela bateria de testes.
+
+![relatório de cobertura de testes](https://i.imgur.com/khV7v6p.png)
+
+# Considerações finais
+
+Apesar de ser uma tarefa relativamente simples, esse projeto representa bem o número preocupações que devemos levar em conta ao desenvolver um projeto front-end: desde complexidade de algoritmos e gerenciamento de estados até experiência do usuário, HTML semântico, testes unitários e muitos outros pontos.
+
+Espero que esse projeto e essa documentação traga um algum insight sobre minha maneira de pensar sobre software e estratégias de otimização e resolução de problemas.
+
+# Informações de contato
+
+[LinkedIn](https://www.linkedin.com/in/joaoandreossi/)
+[E-mail](mailto:joao.andreossi@gmail.com)
+[WhatsApp](https://wa.me/5516981666814)
