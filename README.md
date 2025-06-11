@@ -315,5 +315,58 @@ Nessa tarefa implementamos apenas o método `getRecommendations`, mas é bem sim
 
 Com isso acredito que cumprimos todos os critérios de aceite da tarefa!
 
-# Melhorias de layout
-> TODO
+Seguindo o *GitFlow*, as alterações foram feitas na branch `feature/recommendation_algorithm`, seguido de um PR com a branch `main` como destino.
+
+# Melhorias na interface
+
+Agora que a funcionalidade central do sistema foi desenvolvida, podemos focar em outras melhorias que podem enriquecer a experiência do usuário em nossa aplicação. Seguindo a mesma estratégia que utilizamos na otimização de algoritmo, iremos procurar pequenas alterações que podemos implementar sem ter tanto trabalho ao invés de reescrever todo o código. 
+
+#### Checkbox.js
+Uma das primeiras coisas que eu identifiquei foi que não existe nenhum feedback quando o usuário passa o mouse por elementos interativos. Uma melhoria simples é alterar o cursor para o tipo *pointer* quando o mouse passar por cima de um desses elementos, isso comunica ao usuário que o elemento é interativo e pode ser clicado. Também podemos alterar a cor do texto ligeiramente para dar ainda mais destaque.
+
+![print de tela mostrando efeitos de hover em uma lista com checkboxes](https://i.imgur.com/vZ1ucTm.png)
+
+#### RecommendationType.js
+Desenvolvendo essa melhoria eu percebi que o label dos *radio buttons* no campo `Tipo de Recomendação` não setam o input ao clicar no texto. Isso ocorre pois o componente `RecommendationType` tenta usar um label fora do componente *Checkbox*, o que os fazem ficarem desconectados.
+
+Conseguimos resolver o problema facilmente removendo o elemento *label* e passando o texto como filho do componente *Checkbox*, assim podemos utilizar o label interno do componente. 
+
+Aproveitamos para alterar o HTML para um tag mais semântica e também setamos o campo `SingleProduct` como selecionado por padrão, resolvendo uma inconsistência que identificamos a um tempo atrás. Também foi necessário aumentar o espaçamento entre os componentes *Checkbox*, já que a largura do label original servia como margem entre os dois.
+
+![diferenças entre o componente RecommendationType após alterações](https://i.imgur.com/P40y1gU.png)
+
+Agora o campo `Tipo de Recomendação` possui o mesmo comportamento dos outros campos e vem com um dos valores selecionado por padrão.
+
+![print de tela mostrando o hover em radio button](https://i.imgur.com/2ih4MTj.png)
+
+# Implementando HTML semântico
+
+HTML semântico se refere ao conceito de que devemos utilizar tags HTML em lugares apropriados de maneira que os elementos descrevam semanticamente o conteúdo da página. 
+
+Por exemplo, podemos ter um artigo de blog textualmente bem estruturado, com cabeçalho, capítulos, rodapés, etc. Nós podemos montar esse artigo usando HTML de várias maneiras, mas se utilizarmos uma tag genérica para tudo (ex: `<div>` ou `<span>`) fica bem difícil entender a significância de cada bloco de código, já que isoladamente eles tem a mesma importância na página.
+
+Com HTML semântico o documento fica bem mais explicito quanto a disposição do conteúdo, e isso traz diversos benefícios para acessibilidade com leitores de tela, ajuda no SEO da página e também facilita o desenvolvimento.
+
+#### Form.js
+Já fizemos uma melhoria prévia no componente `RecommendationType` alterando seu container de `<div>` para `<fieldset>`, o que faz mais sentido já que esse componente representa uma parte um formulário. Aplicando a mesma alteração nos componentes `Preferences` e `Features`, o componente `Form` fica muito mais semântico, como podemos ver na imagem.
+
+![HTML editado do componente Form](https://i.imgur.com/ekcfNr9.png)
+
+#### App.js
+O componente `App` é *entry point* da aplicação, então toda a árvore de componentes começa por aqui. Para referência, esse é o *HTML* completo do sistema que iremos referenciar nessa seção.
+
+![HTML completo da aplicação](https://i.imgur.com/MR6Ddji.png)
+
+O primeiro `<div>` com id root é o container onde a árvore de componentes do React é inicializada, então é necessário para a aplicação funcionar. O segundo `<div>` é um *wrapper* que determina o layout base da página, ele não possui nenhum valor semântico então podemos manter assim.
+
+A tag `<h1>` serve como uma introdução para a página, detalhando que se trata de um recomendador de produtos, logo possui valor semântico. Podemos envolver a tag em um elemento `<header>` para indicar sua função. Também aproveitamos para substituir a margem do elemento `<h1>` por um *padding* no elemento `<header>`, deixando o espaçamento do título mais simétrico.
+
+![imagem mostrando o ajuste no espaçamento do header](https://i.imgur.com/1v9q2yw.png)
+
+Após o `<header>`, temos um novo `<div>` que envolve o resto dos elementos da página. Como esse é o container imediato de todo o resto do conteúdo da página, faz sentido alterarmos para a tag `<main>` que serve para comunicar que o principal conteúdo da página está ali dentro.
+
+Dentro da `<main>`, o conteúdo é claramente dividido em três partes: o parágrafo informativo sobre o recomendador, o formulário e a lista de recomendações. Cada uma dessas partes pode ser considerada uma seção da página, ou seja, partes independentes mas que não fazem sentido fora do contexto onde elas se encontram. Caso cada seção não dependesse das outras partes para fazer sentido, poderiam ser consideradas um `<article>`, mas como não é o caso iremos alterar suas tags para o elemento `<section>`.
+
+![HTML final após edições](https://i.imgur.com/nak01vp.png)
+
+Após essas alterações, podemos verificar que o HTML semântico é bem mais fácil de compreender e é possível captar a essência do documento sem nem precisar rodar a aplicação.
